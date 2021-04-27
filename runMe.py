@@ -89,7 +89,28 @@ class CustomList:
 		res = CustomList.get_values(self,args)
 		mn = mean(res)
 		return sqrt(mean([(x-mn)**2 for x in res]))
+	# make it iterable
+	def __iter__(self):
+		return self
+	def __next__(self):
+		if self.currentIndex >= len(self.my_list):
+			raise StopIteration
+		result = self.my_list[self.currentIndex]
+		self.currentIndex += 1
+		return result
 	def __repr__(self):
 		if isinstance(self.my_list, int):
 			return str([self.my_list])
 		return str(self.my_list)
+def test():
+	q1 = CustomList(100,90,80,70,10,20,30,40,50,0,1,2,3,4,5,([6,[7,[8,range(9,12)]]]),[12,13,14,15,16,[(17,18,19,20,21,range(22,30))]])
+	print(q1.sum([range(0,10),[([(range(0,10))])]]))
+	print(q1.sum((0,1,2,3,4,5,([6,[7,[8,range(9,12)]]]),[12,13,14,15,16,[(17,18,19,20,21,range(22,30))]])))
+	print(q1.sum())
+	print(q1.mean())
+	print(q1.std())
+	print(q1.var())
+	for item in q1:
+		print(item)
+if __name__ == "__main__":
+	test()
